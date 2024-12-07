@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import sendEmail from "../utils/sendEmail.js";
 import crypto from "crypto";
+import sendForgotPasswordEmail from "../utils/sendForgot.js";
 
 export const registerUser = async (req, res) => {
   try {
@@ -229,9 +230,9 @@ export const forgotPassword = async (req, res) => {
     // Kirim email dengan link reset password
     const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
 
-    const message = `You have requested to reset your password. Please click the following link to reset your password:\n\n${resetUrl}`;
+    // const message = `Click the link below to reset your password:\n\n${resetUrl}`;
 
-    await sendEmail(user.email, `Reset Password`, message);
+    await sendForgotPasswordEmail(user.email, `Reset Password`, resetUrl);
 
     res.status(200).json({
       success: true,
