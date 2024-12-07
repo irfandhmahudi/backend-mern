@@ -72,7 +72,7 @@ export const registerUser = async (req, res) => {
     });
 
     if (user) {
-      await sendEmail(user.email, "Verify your account", `Your OTP is ${otp}`);
+      await sendEmail(user.email, "Verify your account", `${otp}`);
       res.status(201).json({
         success: true,
         message: "User registered. Check your email for OTP.",
@@ -231,7 +231,7 @@ export const forgotPassword = async (req, res) => {
 
     const message = `You have requested to reset your password. Please click the following link to reset your password:\n\n${resetUrl}`;
 
-    await sendEmail(user.email, "Reset Password", message);
+    await sendEmail(user.email, `Reset Password`, message);
 
     res.status(200).json({
       success: true,

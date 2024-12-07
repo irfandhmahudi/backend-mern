@@ -16,11 +16,11 @@ const sendEmail = async (email, subject, message) => {
     html: `
       <html>
         <body style="font-family: Arial, sans-serif; text-align: center; padding: 20px;">
-          <h1 style="font-size: 20px; color: #333;">Your OTP Code</h1>
+          <h1 style="font-size: 20px; color: #333;">${subject}</h1>
           <div style="font-size: 20px; font-weight: bold; color: #FF5733;">
             ${message}
           </div>
-          <p style="font-size: 18px; color: #333;">Please use the OTP above to verify your account.</p>
+          <p style="font-size: 18px; color: #333;"></p>
         </body>
       </html>
     `,
