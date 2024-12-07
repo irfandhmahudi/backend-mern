@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/database.js";
 import userRoutes from "./route/userRoute.js";
 import cookieParser from "cookie-parser";
+import avatarRoutes from "./route/avatarRoute.js";
 
 const app = express();
 dotenv.config();
@@ -30,7 +31,11 @@ app.use(
   })
 );
 
+// Route for users
 app.use("/api/user", userRoutes);
+
+// Route for avatars
+app.use("/api/avatar", avatarRoutes);
 
 const PORT = process.env.PORT || 5000;
 
