@@ -2,6 +2,7 @@ import User from "../models/userModels.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import sendEmail from "../utils/sendEmail.js";
+import crypto from "crypto";
 
 export const registerUser = async (req, res) => {
   try {
@@ -200,6 +201,41 @@ export const logoutUser = (req, res) => {
     res.status(200).json({
       success: true,
       message: "Logout successful",
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: "Server error", error: error.message });
+  }
+};
+
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    // Buat token reset password (valid hanya 1 jam)
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpire = Date.now() + 3600000; // Token valid selama 1 jam
+    await user.save();
+
+    // Kirim email dengan link reset password
+    const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
+
+    const message = `You have requested to reset your password. Please click the following link to reset your password:\n\n${resetUrl}`;
+
+    await sendEmail(user.email, "Reset Password", message);
+
+    res.status(200).json({
+      success: true,
+      message: "Password reset email sent",
     });
   } catch (error) {
     res

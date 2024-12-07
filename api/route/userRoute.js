@@ -5,6 +5,7 @@ import {
   getMe,
   logoutUser,
   verifyOtp,
+  forgotPassword,
 } from "../controller/userControllers.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 
@@ -24,5 +25,8 @@ router.post("/logout", logoutUser);
 
 // Verify OTP
 router.post("/verify-otp", verifyOtp);
+
+// Forgot Password
+router.post("/forgot-password", forgotPassword);
 
 export default router;
