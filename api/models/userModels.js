@@ -23,6 +23,7 @@ const userSchema = mongoose.Schema(
     isVerified: { type: Boolean, default: false },
     avatar: { type: String }, // URL gambar di Cloudinary
     otp: { type: String },
+    role: { type: String, default: "user" },
     resetPasswordToken: { type: String },
     resetPasswordExpire: { type: Date },
     cart: [cartItemSchema], // Keranjang pengguna dengan properti size

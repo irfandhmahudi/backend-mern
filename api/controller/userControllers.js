@@ -7,7 +7,12 @@ import sendForgotPasswordEmail from "../utils/sendForgot.js";
 
 export const registerUser = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
+
+    // Validasi role
+    if (role !== "user" && role !== "admin") {
+      return res.status(400).json({ success: false, message: "Invalid role" });
+    }
 
     // Validasi input
     if (!username || !email || !password) {
@@ -53,6 +58,7 @@ export const registerUser = async (req, res) => {
       email,
       password: hashedPassword,
       otp,
+      role,
     });
 
     // Buat JWT token
